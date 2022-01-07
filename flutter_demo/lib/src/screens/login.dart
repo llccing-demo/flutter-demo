@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () {
                   widget.onLogin(Credentials(_usernameController.value.text,
                       _passwordController.value.text));
-                  Navigator.pushReplacementNamed(context, '/random');
+                  Navigator.pushReplacementNamed(context, '/home');
                 },
                 child: const Text('登录'),
               ),
