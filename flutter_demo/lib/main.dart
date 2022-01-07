@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/src/screens/login.dart';
-import 'package:flutter_demo/src/screens/randomWords.dart';
+import 'package:flutter_demo/screens/login.dart';
+import 'package:flutter_demo/screens/randomWords.dart';
 
 void main() {
   runApp(const MyApp());
