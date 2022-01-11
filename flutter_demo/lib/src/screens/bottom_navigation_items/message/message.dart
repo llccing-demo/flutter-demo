@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
-
+const BASE_URL = "http://localhost:7777";
 void getHttp() async {
   try {
     // var response = await Dio().get('http://www.google.com');
@@ -13,15 +13,16 @@ void getHttp() async {
   }
 }
 
-loginReq() async {
+loginReq(username,password) async {
   try {
     var dio =  Dio();
-    FormData formData = FormData.fromMap({'name':'张三'});
-
-    var url ='http://localhost:7777/login';
-    var respones = await dio.get(url);
-    print(respones.data);
-    return 's';
+    var params = {
+      "username":username,
+      "password":password
+    };
+    var url ='/login';
+    var respones = await dio.post(BASE_URL+url,queryParameters: params);
+    return respones.data;
   } catch (e) {
     print(e);
   }
