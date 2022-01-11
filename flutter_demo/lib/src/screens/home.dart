@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'bottom_navigation_items/bottom_navigation_items.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _HomeScreenState();

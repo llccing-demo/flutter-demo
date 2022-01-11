@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:flutter_demo/src/screens/bottom_navigation_items/bottom_navigation_items.dart';
 // import './bottom_navigation_items//message/message.dart' show loginReq;
+=======
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+>>>>>>> b49f51d005ae181010d4bbf0f94f1758833990be
 class Credentials {
   final String username;
   final String password;
@@ -68,6 +73,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) => _buildLoginWrapper();
   Widget _buildLoginWrapper() {
+    //设置尺寸（填写设计中设备的屏幕尺寸）如果设计基于750dp * 1334dp的屏幕
+    ScreenUtil.init(
+        BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+            maxHeight: MediaQuery.of(context).size.height),
+        designSize: Size(750, 1334),
+        minTextAdapt: true,
+        orientation: Orientation.portrait);
     // return Scaffold(body: Center(child: _buildLoginInputWrapper()));
     return Column(
       // mainAxisAlignment: MainAxisAlignment.center,
