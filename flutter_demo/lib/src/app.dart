@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/src/screens/login.dart';
 import 'package:flutter_demo/src/screens/randomWords.dart';
 import 'package:flutter_demo/src/screens/home.dart';
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
