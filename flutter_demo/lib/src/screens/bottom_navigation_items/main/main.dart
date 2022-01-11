@@ -9,6 +9,8 @@ class MainWidget extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       color: Colors.red,
+      width: 750,
+      height: 1334,
       child: TextButton(
         onPressed: () {
           Navigator.push(
