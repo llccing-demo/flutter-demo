@@ -2,11 +2,26 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 
+
 void getHttp() async {
   try {
     // var response = await Dio().get('http://www.google.com');
     var response = await Dio().get("/test?id=12&name=wendu");
     print(response);
+  } catch (e) {
+    print(e);
+  }
+}
+
+loginReq() async {
+  try {
+    var dio =  Dio();
+    FormData formData = FormData.fromMap({'name':'张三'});
+
+    var url ='http://localhost:7777/login';
+    var respones = await dio.get(url);
+    print(respones.data);
+    return 's';
   } catch (e) {
     print(e);
   }
