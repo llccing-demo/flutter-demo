@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_demo/src/screens/login.dart';
 import 'package:flutter_demo/src/screens/randomWords.dart';
 import 'package:flutter_demo/src/screens/home.dart';
+import 'package:flutter_demo/src/screens/contract_detail/contract_detail.dart';
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
           '/': (context) => LoginScreen(onLogin: onLogin),
           '/home': (context) => HomeScreen(),
           '/random': (context) => RandomWords(),
+          '/contract-detail': (context) => ContractDetail(),
         });
   }
 }

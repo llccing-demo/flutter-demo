@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/src/screens/bottom_navigation_items/bottom_navigation_items.dart';
+// import './bottom_navigation_items//message/message.dart' show loginReq;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Credentials {
@@ -32,15 +34,26 @@ class _LoginScreenState extends State<LoginScreen> {
         height: 50,
         onPressed: () {
           if (_checkLogin(_usernameController.text, _passwordController.text)) {
-            print('success');
-            Navigator.pushReplacementNamed(context, '/home');
+            var res =
+                loginReq(_usernameController.text, _passwordController.text);
+            if (res.status) {
+              Navigator.pushReplacementNamed(context, '/home');
+            } else {}
           } else {
+            showDialog(
+                context: context,
+                builder:(BuildContext context)=> AlertDialog(
+                  title: Text("警告"),
+                  content: Text("请先输入账号,密码!"),
+                  actions: [
+                  ],
+                ));
             print('fail');
           }
         },
       );
   bool _checkLogin(username, password) {
-    if (username == "lbt" && password == "123") {
+    if (username!='' && password!='') {
       return true;
     } else {
       return false;
@@ -128,15 +141,31 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 100),
-              child: Container(
-                  // constraints: BoxConstraints.loose(const Size(600, 10)),
-                  child: Text("AstraZeneca",
-                      style: TextStyle(
-                          color: Colors.purple,
-                          decoration: TextDecoration.none,
-                          fontSize: 16))),
-            ),
+                padding: EdgeInsets.only(top: 100, left: 60, right: 60),
+                child: Container(
+                    decoration: BoxDecoration(
+                        border: Border(
+                            top: BorderSide(
+                                color: Colors.black26,
+                                width: 1,
+                                style: BorderStyle.solid))),
+                    padding: EdgeInsets.only(top: 0),
+                    // constraints: BoxConstraints.loose(const Size(600, 10)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("AstraZeneca",
+                            style: TextStyle(
+                                color: Colors.purple,
+                                decoration: TextDecoration.none,
+                                fontSize: 16)),
+                        Icon(
+                          Icons.remove_done,
+                          color: Colors.orange,
+                          size: 28,
+                        )
+                      ],
+                    ))),
             Padding(
               padding: EdgeInsets.only(bottom: 40),
               child: Container(
@@ -166,7 +195,11 @@ class _LoginScreenState extends State<LoginScreen> {
             Text("AstraZeneca",
                 style: TextStyle(
                     color: Colors.white, decoration: TextDecoration.none)),
-            Icon(Icons.remove_done,color: Colors.orange,size: 48,)
+            Icon(
+              Icons.remove_done,
+              color: Colors.orange,
+              size: 48,
+            )
           ],
         ),
       ),
