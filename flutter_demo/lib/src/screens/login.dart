@@ -33,6 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
         minWidth: 500,
         height: 50,
         onPressed: () {
+          Navigator.pushReplacementNamed(context, '/home');
+
           if (_checkLogin(_usernameController.text, _passwordController.text)) {
             var res =
                 loginReq(_usernameController.text, _passwordController.text);
