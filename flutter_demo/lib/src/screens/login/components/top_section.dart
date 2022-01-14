@@ -8,9 +8,10 @@ class TopSection extends StatelessWidget {
       constraints: BoxConstraints.loose(const Size(600, 200)),
       height: ScreenUtil().setHeight(535),
       width: ScreenUtil().setWidth(750),
+
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('logintopbg.png'), fit: BoxFit.cover)),
+              image: AssetImage('assets/loginTopBg.png'), fit: BoxFit.cover)),
       child: Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

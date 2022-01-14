@@ -96,6 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
         height: ScreenUtil().setHeight(1334),
         width: ScreenUtil().setWidth(750),
+        color:Colors.white,
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             // _buildLoginTopWrapper(),//
             TopSection(),
-            // _buildLoginInputAndBottomWrapper(),
+            _buildLoginInputAndBottomWrapper(),
           ],
         ));
   }
