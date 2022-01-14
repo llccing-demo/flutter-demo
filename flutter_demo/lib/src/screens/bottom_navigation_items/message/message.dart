@@ -12,22 +12,6 @@ void getHttp() async {
     print(e);
   }
 }
-
-loginReq(username,password) async {
-  try {
-    var dio =  Dio();
-    var params = {
-      "username":username,
-      "password":password
-    };
-    var url ='/login';
-    var respones = await dio.post(BASE_URL+url,queryParameters: params);
-    return respones.data;
-  } catch (e) {
-    print(e);
-  }
-}
-
 class MessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
