@@ -1,8 +1,8 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'contract_list.dart';
 
 class ContractCenterWidget extends StatefulWidget {
@@ -15,19 +15,19 @@ class ContractCenterWidget extends StatefulWidget {
 class _ContractCenterWidget extends State<ContractCenterWidget> {
   //定义一个controller
   final TextEditingController _seachController = TextEditingController(text: "haha");
-  Future<Response> mockNetworkData() async {
+  Future<Response> mockNetworkData(Map<String ,dynamic> query) async {
     // return Future.delayed(Duration(seconds: 2), () => "我是从互联网上获取的数据");
     Response response;
     var dio = Dio();
     // response = await dio.get('/test?id=12&name=wendu');
-    response = await dio.get('http://192.168.100.71:3000/mock/12/burning/allHeros', queryParameters: {'id': 12, 'name': 'wendu'});
+    response = await dio.get('http://192.168.100.71:3000/mock/12/burning/allHeros', queryParameters: query);
     return response;
   }
   @override
   initState() {
     // TODO: implement initState
     super.initState();
-    mockNetworkData().then((value) => print(value));
+    mockNetworkData({}).then((value) => print(value));
     // print();
   }
 
@@ -59,7 +59,10 @@ class _ContractCenterWidget extends State<ContractCenterWidget> {
                     contentPadding: EdgeInsets.only(top: 0.0),
                     hintText: 'Search',
                     border: InputBorder.none),
-                // onChanged: onSearchTextChanged,
+                  onSubmitted: (v) {
+                    // mockNetworkData({});
+                    setState(() {});
+                  }
               ),
             ),
           ),
@@ -143,7 +146,7 @@ class _ContractCenterWidget extends State<ContractCenterWidget> {
 
   Widget _contractList () {
     return FutureBuilder(
-        future: mockNetworkData(),
+        future: mockNetworkData({}),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           // 请求已结束
           if (snapshot.connectionState == ConnectionState.done) {
@@ -151,12 +154,14 @@ class _ContractCenterWidget extends State<ContractCenterWidget> {
               // 请求失败，显示错误
               return Text("Error: ${snapshot.error}");
             } else {
+              Response response = snapshot.data;
               // 请求成功，显示数据
-              return Text("Contents: ${snapshot.data}");
+              Map data =  jsonDecode(response.data);
+              return ContractListWidget(contractList: data['data']);
             }
           } else {
             // 请求未结束，显示loading
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         }
     );
@@ -164,12 +169,12 @@ class _ContractCenterWidget extends State<ContractCenterWidget> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-        constraints: const BoxConstraints(minWidth: 750, minHeight: 1334),
+        constraints: BoxConstraints(minWidth: ScreenUtil().setWidth(750), minHeight: ScreenUtil().setHeight(1334)),
         child: Container(
-            width: 750,
-            height: 1334,
+            width: ScreenUtil().setWidth(750),
+            height: ScreenUtil().setHeight(1334),
             padding: const EdgeInsets.all(16.0),
-            color: Colors.white,
+            // color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -180,7 +185,7 @@ class _ContractCenterWidget extends State<ContractCenterWidget> {
                 _inputSearch(),
                 _buttonWap(),
                 _contractTitle(),
-                // _contractList(),
+                _contractList(),
                 // ContractListWidget(contractList: [])
               ],
             )
@@ -188,3 +193,4 @@ class _ContractCenterWidget extends State<ContractCenterWidget> {
     );
   }
 }
+
