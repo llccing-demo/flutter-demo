@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_demo/http/API.dart';
 import 'package:flutter_demo/src/screens/login/components/top_section.dart';
+
 class Credentials {
   final String username;
   final String password;
@@ -32,6 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
         minWidth: 500,
         height: 50,
         onPressed: () async {
+          Navigator.pushReplacementNamed(context, '/home');
+
           if (_checkLogin(_usernameController.text, _passwordController.text)) {
             var userInfo = {
               'username': _usernameController.text,
@@ -188,5 +191,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-  
 }
