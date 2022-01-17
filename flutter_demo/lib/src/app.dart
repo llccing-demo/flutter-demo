@@ -3,7 +3,7 @@ import 'package:flutter_demo/src/screens/login/login.dart';
 import 'package:flutter_demo/src/screens/randomWords.dart';
 import 'package:flutter_demo/src/screens/home.dart';
 import 'package:flutter_demo/src/screens/contract_detail/contract_detail.dart';
-
+import 'package:get/get.dart';
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -14,7 +14,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    //MaterialApp ->GetMaterialApp 
+    return GetMaterialApp(
         title: '首页',
         theme: ThemeData(
           primarySwatch: Colors.blue,

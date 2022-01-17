@@ -6,9 +6,9 @@ class TopSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints.loose(const Size(600, 200)),
-      height: ScreenUtil().setHeight(535),
+      height: ScreenUtil().setHeight(575),
       width: ScreenUtil().setWidth(750),
-
+      // color:Colors.red,
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/loginTopBg.png'), fit: BoxFit.cover)),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_demo/http/API.dart';
-import 'package:flutter_demo/src/screens/login/components/top_section.dart';
+import 'package:flutter_demo/http/api.dart';
+import 'package:flutter_demo/src/screens/login/widgets/top_section.dart';
+import 'package:flutter_demo/GetX/logics/userLogic.dart';
 
 class Credentials {
   final String username;
@@ -23,8 +25,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final logic = Get.put(UserLogic());
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+
   Widget _buildLoginButton() => MaterialButton(
         // color: Colors.lightBlue[500],
         color: Colors.lightBlueAccent[200],
@@ -34,14 +38,19 @@ class _LoginScreenState extends State<LoginScreen> {
         height: 50,
         onPressed: () async {
           Navigator.pushReplacementNamed(context, '/home');
-
           if (_checkLogin(_usernameController.text, _passwordController.text)) {
             var userInfo = {
               'username': _usernameController.text,
               'password': _passwordController.text
             };
             var res = await API.login(userInfo);
-            print(res.username);
+            if (res!=null) {
+              logic.seCurrenUser(res);
+              Navigator.pushReplacementNamed(context, '/home');
+              // print(res.username);
+            } else {
+              print('no account exist');
+            }
             // if (res.status&&res.status == 200) {
             //   Navigator.pushReplacementNamed(context, '/home');
             // } else {}
@@ -57,6 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
           }
         },
       );
+ 
   bool _checkLogin(username, password) {
     if (username != '' && password != '') {
       return true;
@@ -96,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
         height: ScreenUtil().setHeight(1334),
         width: ScreenUtil().setWidth(750),
-        color:Colors.white,
+        color: Colors.white,
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildLoginInputAndBottomWrapper() {
     return Container(
         constraints: BoxConstraints.loose(const Size(600, 400)),
-        height: ScreenUtil().setHeight(799),
+        height: ScreenUtil().setHeight(759),
         width: ScreenUtil().setWidth(750),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,6 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: 1,
                                 style: BorderStyle.solid))),
                     padding: EdgeInsets.only(top: 0),
+                    margin: EdgeInsets.only(top: 0),
                     // constraints: BoxConstraints.loose(const Size(600, 10)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
