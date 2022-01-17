@@ -18,12 +18,12 @@ class _HomeScreenState extends State<HomeScreen> {
     ContractCenterWidget(),
     MyWidget(),
   ];
-
+  final List<String> _titleText = ["首页", "消息", "合同中心", '我的'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: Text(_titleText[_currentIndex]),
       ),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
