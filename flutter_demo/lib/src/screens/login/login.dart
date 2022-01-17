@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
             };
             var res = await API.login(userInfo);
             if (res!=null) {
-              logic.seCurrenUser(res);
+              logic.setCurrenUser(res);
               Navigator.pushReplacementNamed(context, '/home');
               // print(res.username);
             } else {
