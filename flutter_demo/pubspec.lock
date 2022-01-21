@@ -104,6 +104,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_bugly:
+    dependency: "direct main"
+    description:
+      name: flutter_bugly
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.3"
   flutter_html:
     dependency: "direct main"
     description:
