@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_demo/src/screens/bottom_navigation_items/bottom_navigation_items.dart';
-// import './bottom_navigation_items//message/message.dart' show loginReq;
+import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_demo/http/api.dart';
+import 'package:flutter_demo/src/screens/login/widgets/top_section.dart';
+import 'package:flutter_demo/GetX/logics/userLogic.dart';
 
 class Credentials {
   final String username;
@@ -23,8 +25,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final logic = Get.put(UserLogic());
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+
   Widget _buildLoginButton() => MaterialButton(
         // color: Colors.lightBlue[500],
         color: Colors.lightBlueAccent[200],
@@ -32,28 +36,39 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Text('登录'),
         minWidth: 500,
         height: 50,
-        onPressed: () {
+        onPressed: () async {
+          Navigator.pushReplacementNamed(context, '/home');
           if (_checkLogin(_usernameController.text, _passwordController.text)) {
-            var res =
-                loginReq(_usernameController.text, _passwordController.text);
-            if (res.status) {
+            var userInfo = {
+              'username': _usernameController.text,
+              'password': _passwordController.text
+            };
+            var res = await API.login(userInfo);
+            if (res!=null) {
+              logic.setCurrenUser(res);
               Navigator.pushReplacementNamed(context, '/home');
-            } else {}
+              // print(res.username);
+            } else {
+              print('no account exist');
+            }
+            // if (res.status&&res.status == 200) {
+            //   Navigator.pushReplacementNamed(context, '/home');
+            // } else {}
           } else {
             showDialog(
                 context: context,
-                builder:(BuildContext context)=> AlertDialog(
-                  title: Text("警告"),
-                  content: Text("请先输入账号,密码!"),
-                  actions: [
-                  ],
-                ));
+                builder: (BuildContext context) => AlertDialog(
+                      title: Text("警告"),
+                      content: Text("请先输入账号,密码!"),
+                      actions: [],
+                    ));
             print('fail');
           }
         },
       );
+ 
   bool _checkLogin(username, password) {
-    if (username!='' && password!='') {
+    if (username != '' && password != '') {
       return true;
     } else {
       return false;
@@ -88,22 +103,28 @@ class _LoginScreenState extends State<LoginScreen> {
         designSize: Size(750, 1334),
         minTextAdapt: true,
         orientation: Orientation.portrait);
-    // return Scaffold(body: Center(child: _buildLoginInputWrapper()));
-    return Column(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _buildLoginTopWrapper(),
-        _buildLoginInputAndBottomWrapper(),
-      ],
-    );
+    return Container(
+        height: ScreenUtil().setHeight(1334),
+        width: ScreenUtil().setWidth(750),
+        color: Colors.white,
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // _buildLoginTopWrapper(),//
+            TopSection(),
+            _buildLoginInputAndBottomWrapper(),
+          ],
+        ));
   }
 
   // 输入框容器+底部的容器
   Widget _buildLoginInputAndBottomWrapper() {
     return Container(
         constraints: BoxConstraints.loose(const Size(600, 400)),
+        height: ScreenUtil().setHeight(759),
+        width: ScreenUtil().setWidth(750),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             mainAxisSize: MainAxisSize.max,
@@ -150,6 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 width: 1,
                                 style: BorderStyle.solid))),
                     padding: EdgeInsets.only(top: 0),
+                    margin: EdgeInsets.only(top: 0),
                     // constraints: BoxConstraints.loose(const Size(600, 10)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -175,30 +197,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.black54,
                           decoration: TextDecoration.none,
                           fontSize: 10))),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLoginTopWrapper() {
-    return Container(
-      constraints: BoxConstraints.loose(const Size(600, 200)),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('loginTopBg.webp'), fit: BoxFit.cover)),
-      child: Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("AstraZeneca",
-                style: TextStyle(
-                    color: Colors.white, decoration: TextDecoration.none)),
-            Icon(
-              Icons.remove_done,
-              color: Colors.orange,
-              size: 48,
             )
           ],
         ),
